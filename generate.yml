@@ -1,0 +1,22 @@
+name: Dizi M3U Güncelle
+
+on:
+  schedule:
+    - cron: '0 4 * * *'   # hər gecə 04:00-da
+  workflow_dispatch:       # əllə də başlatma
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 18
+    - name: Script'i çalıştır
+      run: node generate.js
+    - name: M3U faylını yüklə (artifact)
+      uses: actions/upload-artifact@v4
+      with:
+        name: diziler-m3u
+        path: diziler.m3u
